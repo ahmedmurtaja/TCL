@@ -38,6 +38,18 @@ switch $a {
     default {puts "default"}
 }
 
+puts "----------------------------------";
+
+# if statement
+
+if {$x ==1} { # the condition in curly braces , if body must be opened in the same line
+    puts "x is equal to 1";
+    } else { # else must be in the same line as the closing brace of the if body
+        puts "x is not equal to 1";
+    }
+if $x==1 { 
+    puts "WE CAN OMIT THE CURLY BRACES $x";
+}
 
 puts [set x "Khaled"]; # Khaled : TCL set command returns the new value of the variable
 puts $x; # Khaled
