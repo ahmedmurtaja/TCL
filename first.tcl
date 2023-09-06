@@ -332,3 +332,92 @@ puts [string compare $str1 $str2]; # -1
 
 set str "Khaled";
 puts [string range $str 0 2]; # Kha
+
+# string first string1 string2 : returns the index of the first occurrence of string1 in string2
+
+set str "Khaled Ahemd Kamal Khaled";
+
+puts [string first "Khaled" $str]; # 0
+
+# string last string1 string2 : returns the index of the last occurrence of string1 in string2
+
+set str "Khaled Ahemd Kamal Khaled";
+
+puts [string last "Khaled" $str]; # 19
+
+# string tolower string : converts the string to lowercase
+
+# string wordend string index : returns the index of the end of the word at the specified index
+
+set str "Khaled Ahemd Kamal Khaled";
+
+puts [string wordend $str 7];
+
+# string wordstart string index : returns the index of the start of the word at the specified index
+
+set str "Khaled Ahemd Kamal Khaled";
+
+puts [string wordstart $str 14]; 
+
+# string trim string ?chars? : removes the leading and trailing characters from the string
+# Usage : string trim string ?chars?
+
+set str "     Khaled     ";
+
+puts [string trim $str]; # Khaled
+
+# string trimleft string ?chars? : removes the leading characters from the string
+# Usage : string trimleft string ?chars?
+
+set str "     Khaled     ";
+
+puts [string trimleft $str]; # Khaled
+
+# string trimright string ?chars? : removes the trailing characters from the string
+# Usage : string trimright string ?chars?
+
+# string tolower string : converts the string to lowercase
+
+set str "Khaled";
+
+puts [string tolower $str]; # khaled
+puts [string toupper $str]; # KHALED
+
+
+# string format format ?arg arg ...? : returns a formatted string
+# Usage : string format format ?arg arg ...?
+
+set str [ format "%s %s %s" "Khaled" "Ahmed" "Kamal"];
+
+puts $str; # Khaled Ahmed Kamal
+
+# spacing and indentation using format
+
+set str [ format "%-10s %-10s %-10s" "Khaled" "Ahmed" "Kamal"];
+
+puts $str; # Khaled     Ahmed      Kamal
+
+# table using format
+
+set str [ format "%-10s %-10s %-10s" "Name" "Age" "Address"];
+
+puts $str; # Name       Age        Address
+
+# - : left justify
+# + : right justify
+# 0 : pad with zeros
+# # : use alternate format
+# space : pad with spaces
+
+# %d : integer
+# %f : float
+# %s : string
+# %c : character
+# %o : octal
+# %x : hexadecimal
+# %e : exponential
+# %g : general
+# %p : pointer
+# %u : unsigned integer
+
+# string is integer string : returns 1 if the string is an integer
