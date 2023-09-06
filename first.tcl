@@ -38,6 +38,7 @@ switch $a {
     default {puts "default"}
 }
 
+
 puts "----------------------------------";
 
 # if statement
@@ -54,9 +55,34 @@ if $x==1 {
 puts [set x "Khaled"]; # Khaled : TCL set command returns the new value of the variable
 puts $x; # Khaled
 puts $y; # ahmed
+set x 1;
+set y x;
+if "$$y == 1" {
+    puts "Khaled Ya Khaled";
+}
+
+# while loop
+
+set x 1;
+while {$x < 10} {
+    puts $x;
+    set x [expr $x+1]; # equivalent to incr x
+}
 
 puts [set x]; # Khaled
 
-foreach i {1 2 3 4 5} {
+for {set index 0} { $index < 5 } { incr index } {
+    puts "55";
+}
+
+# for loop
+# for {initialization} {condition} {increment} {body}
+for {set i 0} {$i < 10} {incr i} {
     puts $i;
+}
+
+# foreach loop
+# foreach var list {body}
+foreach x {1 2 3 4 5} {
+    puts $x;
 }
