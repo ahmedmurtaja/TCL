@@ -421,3 +421,407 @@ puts $str; # Name       Age        Address
 # %u : unsigned integer
 
 # string is integer string : returns 1 if the string is an integer
+
+
+# Regexp
+
+# regexp ?-all? ?-inline? ?-indices? ?-nocase? ?-line? ?-linestop? ?-expanded? ?-about? ?-lineanchor? ?-start index? ?-indices varName? exp string ?matchVar? ?subMatchVar subMatchVar ...? : returns 1 if the string matches the regular expression
+# Usage : regexp ?-all? ?-inline? ?-indices? ?-nocase? ?-line? ?-linestop? ?-expanded? ?-about? ?-lineanchor? ?-start index? ?-indices varName? exp string ?matchVar? ?subMatchVar subMatchVar ...?
+
+# -all : returns all matches
+# -inline : returns the matches in a list
+# -indices : returns the indices of the matches
+# -nocase : ignores case
+# -line : treats the string as a single line
+# -linestop : treats the string as multiple lines
+# -expanded : ignores whitespace
+# -about : returns information about the regular expression
+# -lineanchor : treats the string as multiple lines
+# -start index : starts the search at the specified index
+# -indices varName : stores the indices of the matches in the variable
+# exp : the regular expression
+
+set str "Khaled Ahmed Kamal Khaled";
+
+puts [regexp "Khaled" $str]; # 1
+
+# regexp -all "Khaled" $str : returns 2
+# regexp -inline "Khaled" $str : returns a list of the matches
+
+puts [regexp -all "Khaled" $str match]; # 2
+puts [regexp -all -inline "Khaled" $str]; # Khaled Khaled
+
+# regexp -indices "Khaled" $str : returns the indices of the matches
+
+puts [regexp {[A-Z]} $str]; # 1
+
+# match varp
+
+set match "";
+
+puts [regexp {[A-Z]} $str match]; # 1
+puts $match; # K
+
+# assoicative arrays
+
+array set arr {name "Khaled" age 20};
+
+puts $arr(name); # Khaled
+puts $arr(age); # 20
+
+set arr(name) "Ahmed";
+set arr(age) 30;
+set arr(address) "Cairo";
+set arr2(address) "Cairo";
+set arr2(job) "Engineer";
+
+puts $arr(name); # Ahmed
+puts $arr(age); # 30
+puts $arr(address); # Cairo
+puts $arr2(address); # Cairo
+
+
+# array names arrayName : returns a list of the names of the elements in the array
+# Usage : array names arrayName
+
+puts [array names arr]; # name age address
+puts [array names arr2]; # address job
+
+puts [array size arr]; # 3
+
+# array exists arrayName  : returns 1 if the array exists
+# Usage : array exists arrayName 
+
+puts [array exists arr ]; # 1
+puts [array exists ar3 ]; # 0
+
+#  array get arrayName : returns a list of the elements in the array
+
+puts [array get arr]; 
+
+# array set arrayName list : sets the elements in the array to the elements in the list
+
+array set arr {name "Khaled" age 20};
+
+puts $arr(name); # Khaled
+
+# iterating using foreach
+
+foreach {key value} [array get arr] {
+    puts "$key : $value";
+}
+
+puts "----------------------------------";
+
+foreach id [array names arr] {
+    puts "$id : $arr($id)";
+}
+
+# Files 
+
+# open fileName ?access? ?permissions? : opens the file
+# Usage : open fileName ?access? ?permissions?
+
+# access : r , w , a , r+ , w+ , a+
+
+# r : read only , the file must exist
+# w : write only , the file must exist 
+# a : append only , the file must exist
+# r+ : read and write  , the file must exist
+# w+ : read and write if the file exists , otherwise creates a new file
+# a+ : read and write if the file exists , otherwise creates a new file
+
+# permissions : octal number
+
+# 0 : no permissions
+# 1 : execute only
+# 2 : write only
+# 3 : write and execute
+# 4 : read only
+# 5 : read and execute
+# 6 : read and write
+# 7 : read , write and execute
+
+# close channelId : closes the file
+# Usage : close channelId
+
+set rf [open "api.tcl" r];
+set data [read $rf];
+puts $data;
+
+
+# print line by line
+
+proc sleep {seconds} {
+    after [expr $seconds*1000];
+}
+
+set rf [open "a.md" r];
+while {[gets $rf line] != -1} {
+    puts $line;
+    # sleep 1;
+}
+
+set wf [open "b.md" w+];
+puts $wf "Khaled Ahmed Kamal";
+
+close $rf;
+close $wf;
+
+
+
+
+# glob and file commands
+
+# glob 
+# glob ?switches? ?pattern pattern ...? : returns a list of file names that match the pattern
+# Usage : glob ?switches? ?pattern pattern ...?
+
+# -directory dirName : searches the directory
+# -nocomplain : ignores errors
+# -path : returns the full path
+# -tails : returns the file names only
+
+puts [glob -directory . -join  *]; # a.md b.md
+puts [glob -directory . -tails *]; # a.md b.md
+
+# glob :
+# glob ?switches? ?pattern pattern ...? : returns a list of file names that match the pattern
+# Usage : glob ?switches? ?pattern pattern ...?
+
+# -directory dirName : searches the directory
+# -nocomplain : ignores errors
+# -path : returns the full path
+# -tails : returns the file names only
+
+# format : format ?arg arg ...? : returns a formatted string
+# Usage : format ?arg arg ...?
+
+# -width width : sets the width
+# -justify left|right|center : sets the justification
+# -fillchar char : sets the fill character
+# -padchar char : sets the pad character
+# -comma : adds commas
+# -sign : adds the sign
+# -alternate : uses the alternate format
+# -space : adds a space
+# -sharp : uses the alternate format
+# -zero : pads with zeros
+# -plus : adds the sign
+# -minus : left justifies
+# -integer : formats as an integer
+# -octal : formats as an octal
+# -hexadecimal : formats as a hexadecimal
+# -float : formats as a float
+# -exponential : formats as an exponential
+# -general : formats as a general number
+# -pointer : formats as a pointer
+# -unsigned : formats as an unsigned integer
+# -about : returns information about the format
+# -start index : starts at the specified index
+
+puts [format "%-10s %-10s %-10s" "Name" "Age" "Address"]; # Name       Age        Address
+# file exists fileName : returns 1 if the file exists
+
+puts [file exists "a.md"]; # 1
+set isFileExists [file exists "c.md"]; # 0
+if {$isFileExists == 0} {
+    puts "File does not exist";
+}
+
+# File dirname fileName : returns the directory name of the file
+# Usage : file dirname fileName
+# Returns the directory name of the file
+
+puts [file dirname "a.md"]; # .
+
+# File tail fileName : returns the file name without the directory name
+# Usage : file tail fileName
+# Returns the file name without the directory name
+
+puts [file tail "a.md"]; # a.
+
+# File rootname fileName : returns the file name without the extension
+# Usage : file rootname fileName
+# Returns the file name without the extension
+
+puts [file rootname "a.md"]; # 
+
+# File extension fileName : returns the extension of the file
+# Usage : file extension fileName
+# Returns the extension of the file
+
+puts [file extension "a.md"]; # .md
+# split the .
+puts [lindex [split [file extension "a.md"] "."] 1]; # md
+
+# File join ?dirName dirName ...? : joins the directory names
+
+puts [file join "a" "b" "c"]; # a/b/c
+
+# File normalize fileName : returns the normalized file name
+# Usage : file normalize fileName
+# Returns the normalized file name
+#  convert relative path to absolute path
+
+puts [file normalize "a/b/c"]; # 
+
+# native path names
+# File nativename fileName : returns the native file name
+# Usage : file nativename fileName
+
+
+puts [file nativename "a.md"]; 
+
+#  copy 
+# file copy ?-force? ?-ve
+# Use the file copy command to copy files and directories.
+# Usage : file copy ?-force?
+
+# -force : overwrites existing files
+
+file copy -force  "a.md" "b.md"; 
+
+file rename "a.md" "b.txt"
+sleep 1;
+file rename "b.txt" "a.md"
+
+file delete "api.tcl";
+
+set of [open "api.tcl" w+];
+
+puts $of "puts ahmed ";
+
+# mkdir 
+
+file mkdir "a"
+
+#  exec 
+# exec ?switches? ?arg arg ...? : executes the command
+# Usage : exec ?switches? ?arg arg ...?
+
+# -ignorestderr : ignores errors
+# -keepnewline : keeps the new line
+# -keepblanklines : keeps the blank lines
+# -env envVarName ?value? : sets the environment variable
+# -shell : executes the command in a shell
+# -noshell : executes the command without a shell
+# -interactive : executes the command interactively
+# -output varName : stores the output in the variable
+# -error varName : stores the error in the variable
+# -errorfile fileName : stores the error in the file
+# -input fileName : reads the input from the file
+
+#  | : pipe the output of the first command to the input of the second command 
+# example : exec ls | grep 
+# pipe in TCL 
+
+# < : input <FileName : input from file 
+# > : output >FileName : output to file
+# >> : append >>FileName : append to file
+# 2> : error >FileName : error to file
+# 2>> : error append >>FileName : error append to file
+# &> : output and error >FileName : output and error to file
+# &>> : output and error append >>FileName : output and error append to file
+#  <<value : input from value
+
+# flush channelId : flushes the output buffer
+# Usage : flush channelId
+
+set io [open "api.tcl" w+];
+puts $io "puts ahmed";
+puts "----------------------------------";
+flush $io;
+
+
+
+puts "***";
+set ls [exec ls];
+puts "----------------------------------";
+puts $ls;
+
+# exec ls | grep api
+# exec ls | grep api | grep tcl
+
+# info
+
+# info args procName : returns the arguments of the procedure
+# Usage : info args procName
+
+proc myproc {x y} {
+    puts $x;
+    puts $y;
+}
+
+puts [info args myproc]; # x y
+
+# info body procName : returns the body of the procedure
+# Usage : info body procName
+
+proc myproc {x y} {
+    puts $x;
+    puts $y;
+}
+
+puts [info body myproc]; # puts $x; puts $y;
+
+# info globals : returns the global variables
+# Usage : info globals
+
+puts [info globals]; # ::x ::y ::a ::index ::lst ::lst1 ::lst2 ::lst3 ::day ::month ::year ::rf ::data ::wf ::line ::isFileExists ::match ::arr ::arr2 ::key ::value ::id ::str ::seconds ::io ::ls
+
+
+# info commands : returns the commands
+# Usage : info commands
+
+puts [info commands]; # ::myproc ::sleep ::print ::myproc2 ::myproc3 ::myproc4 ::x ::y ::a ::index ::lst ::lst1 ::lst2 ::lst3 ::day ::month ::year ::rf ::data ::wf ::line ::isFileExists ::match ::arr ::arr2 ::key ::value ::id ::str ::seconds ::io ::ls
+
+# info exists varName : returns 1 if the variable exists
+# Usage : info exists varName
+
+puts [info exists x]; # 1
+puts [info exists z]; # 0
+
+
+# source fileName : executes the TCL script
+
+source "api.tcl";
+
+#  set cmd [exec ls | grep api];
+# puts $cmd;
+
+# eval 
+# eval arg ?arg ...? : evaluates the arguments
+# Usage : eval arg ?arg ...?
+
+set x 1;
+set y 2;
+
+puts [eval expr $x+$y]; # 3
+
+
+# subst
+# subst arg ?arg ...? : substitutes the arguments
+# Usage : subst arg ?arg ...?
+
+set x 1;
+
+
+# subst 
+set a "ONE";
+set b "a";
+
+puts [subst $$b]; # ONE
+
+#  catch
+
+# catch script ?varName? : executes the script and returns 1 if an error occurs
+
+catch {
+    set x 1;
+    set y 2;
+    puts [expr $x+$y];
+    puts [expr $x+$y+$z];
+} err;
+
+puts $err; # can't read "z": no such variable
